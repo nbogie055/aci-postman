@@ -1,0 +1,486 @@
+{
+	"info": {
+		"_postman_id": "55fd880a-bd34-49f5-8df5-7368de6841d4",
+		"name": "MSO",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "26a16987-794f-4bc4-b35a-97bb59a858da",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"nbogdaje\",\r\n    \"password\": \"ins3965!\",\r\n    \"domainId\": \"5c09bdb010000082004a8c70\"\r\n}",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "https://10.122.169.17/api/v1/auth/login",
+					"protocol": "https",
+					"host": [
+						"10",
+						"122",
+						"169",
+						"17"
+					],
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all schemas",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer  ",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://10.122.169.17/mso/api/v1/schemas",
+					"protocol": "https",
+					"host": [
+						"10",
+						"122",
+						"169",
+						"17"
+					],
+					"path": [
+						"mso",
+						"api",
+						"v1",
+						"schemas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get Infra config",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer ",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://10.122.169.17/api/v1/sites/fabric-connectivity",
+					"protocol": "https",
+					"host": [
+						"10",
+						"122",
+						"169",
+						"17"
+					],
+					"path": [
+						"api",
+						"v1",
+						"sites",
+						"fabric-connectivity"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Schema",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer ",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"id\":\"609f10db3800005062fa80e2\",\r\n   \"displayName\":\"Nick1\",\r\n   \"templates\":[\r\n      {\r\n         \"name\":\"Stretched\",\r\n         \"displayName\":\"Stretched\",\r\n         \"tenantId\":\"6093eb333700006633180ad4\",\r\n         \"anps\":[\r\n            {\r\n               \"name\":\"AP1\",\r\n               \"displayName\":\"AP1\",\r\n               \"anpRef\":\"/schemas/609f10db3800005062fa80e2/templates/Stretched/anps/AP1\",\r\n               \"epgs\":[\r\n                  {\r\n                     \"name\":\"EPG1\",\r\n                     \"displayName\":\"EPG1\",\r\n                     \"epgRef\":\"/schemas/609f10db3800005062fa80e2/templates/Stretched/anps/AP1/epgs/EPG1\",\r\n                     \"contractRelationships\":[\r\n                        \r\n                     ],\r\n                     \"subnets\":[\r\n                        \r\n                     ],\r\n                     \"uSegEpg\":false,\r\n                     \"uSegAttrs\":[\r\n                        \r\n                     ],\r\n                     \"intraEpg\":\"unenforced\",\r\n                     \"proxyArp\":false,\r\n                     \"preferredGroup\":false,\r\n                     \"bdRef\":\"\",\r\n                     \"vrfRef\":\"\",\r\n                     \"selectors\":[\r\n                        \r\n                     ]\r\n                  }\r\n               ]\r\n            }\r\n         ],\r\n         \"vrfs\":[\r\n            {\r\n               \"name\":\"VRF1\",\r\n               \"displayName\":\"VRF1\",\r\n               \"vrfRef\":\"/schemas/609f10db3800005062fa80e2/templates/Stretched/vrfs/VRF1\",\r\n               \"l3MCast\":false,\r\n               \"preferredGroup\":false,\r\n               \"vzAnyEnabled\":false,\r\n               \"vzAnyProviderContracts\":[\r\n                  \r\n               ],\r\n               \"vzAnyConsumerContracts\":[\r\n                  \r\n               ],\r\n               \"rpConfigs\":[\r\n                  \r\n               ]\r\n            }\r\n         ],\r\n         \"bds\":[\r\n            {\r\n               \"name\":\"BD2\",\r\n               \"displayName\":\"BD2\",\r\n               \"bdRef\":\"/schemas/609f10db3800005062fa80e2/templates/Stretched/bds/BD2\",\r\n               \"l2UnknownUnicast\":\"proxy\",\r\n               \"intersiteBumTrafficAllow\":true,\r\n               \"optimizeWanBandwidth\":true,\r\n               \"l2Stretch\":true,\r\n               \"subnets\":[\r\n                  \r\n               ],\r\n               \"vrfRef\":\"/schemas/609f10db3800005062fa80e2/templates/Stretched/vrfs/VRF1\"\r\n            },\r\n            {\r\n               \"name\":\"VD1\",\r\n               \"displayName\":\"VD1\",\r\n               \"bdRef\":\"/schemas/609f10db3800005062fa80e2/templates/Stretched/bds/VD1\",\r\n               \"l2UnknownUnicast\":\"proxy\",\r\n               \"intersiteBumTrafficAllow\":true,\r\n               \"optimizeWanBandwidth\":true,\r\n               \"l2Stretch\":true,\r\n               \"subnets\":[\r\n                  \r\n               ],\r\n               \"vrfRef\":\"/schemas/609f10db3800005062fa80e2/templates/Stretched/vrfs/VRF1\"\r\n            }\r\n         ],\r\n         \"contracts\":[\r\n            \r\n         ],\r\n         \"filters\":[\r\n            \r\n         ],\r\n         \"externalEpgs\":[\r\n            \r\n         ],\r\n         \"serviceGraphs\":[\r\n            \r\n         ],\r\n         \"intersiteL3outs\":[\r\n            \r\n         ],\r\n         \"templateType\":\"stretched-template\",\r\n         \"templateSubType\":[\r\n            \r\n         ]\r\n      }\r\n   ],\r\n   \"_updateVersion\":14\r\n}",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "https://10.122.169.17/mso/api/v1/schemas/609f10db3800005062fa80e2",
+					"protocol": "https",
+					"host": [
+						"10",
+						"122",
+						"169",
+						"17"
+					],
+					"path": [
+						"mso",
+						"api",
+						"v1",
+						"schemas",
+						"609f10db3800005062fa80e2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add EPG",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer ",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\r\n  \"op\": \"add\",\r\n  \"path\": \"/templates/Stretched/anps/AP1/epgs/-\",\r\n  \"value\": {\r\n              \"name\": \"epg1\",\r\n              \"displayName\": \"epg1\",\r\n              \"epgRef\": {\r\n                \"schemaId\": \"609f10db3800005062fa80e2\",\r\n                \"templateName\": \"Stretched\",\r\n                \"anpName\": \"AP1\",\r\n                \"epgName\": \"epg1\"\r\n              }\r\n        },\r\n  \"_updateVersion\": 0\r\n}]",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "https://10.122.169.17/mso/api/v1/schemas/609f10db3800005062fa80e2",
+					"protocol": "https",
+					"host": [
+						"10",
+						"122",
+						"169",
+						"17"
+					],
+					"path": [
+						"mso",
+						"api",
+						"v1",
+						"schemas",
+						"609f10db3800005062fa80e2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update EPG",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer ",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\r\n  \"op\": \"replace\",\r\n  \"path\": \"/templates/Stretched/anps/AP1/epgs/EPG1\",\r\n  \"value\": {\r\n              \"name\": \"EPG1\",\r\n              \"displayName\": \"EPG1\",\r\n              \"epgRef\": {\r\n                \"schemaId\": \"609f10db3800005062fa80e2\",\r\n                \"templateName\": \"Stretched\",\r\n                \"anpName\": \"AP1\",\r\n                \"epgName\": \"EPG1\"\r\n              },\r\n              \"bdRef\": {\r\n                \"schemaId\": \"609f10db3800005062fa80e2\",\r\n                \"templateName\": \"Stretched\",\r\n                \"bdName\": \"BD2\"\r\n              }\r\n        },\r\n  \"_updateVersion\": 0\r\n}]",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "https://10.122.169.17/mso/api/v1/schemas/609f10db3800005062fa80e2",
+					"protocol": "https",
+					"host": [
+						"10",
+						"122",
+						"169",
+						"17"
+					],
+					"path": [
+						"mso",
+						"api",
+						"v1",
+						"schemas",
+						"609f10db3800005062fa80e2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Replace sinlge object in EPG",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer ",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"op\": \"replace\",\r\n        \"path\": \"/templates/Nick-2/anps/ap1/epgs/epg1/preferredGroup\",\r\n        \"value\":true \r\n\r\n    }    \r\n]\r\n",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "https://10.122.169.17/mso/api/v1/schemas/61809678370000729b0db6d5",
+					"protocol": "https",
+					"host": [
+						"10",
+						"122",
+						"169",
+						"17"
+					],
+					"path": [
+						"mso",
+						"api",
+						"v1",
+						"schemas",
+						"61809678370000729b0db6d5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Bridge Domain",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer ",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\r\n  \"op\": \"add\",\r\n  \"path\": \"/templates/Stretched/bds/-\",\r\n  \"value\": {\r\n        \"name\": \"bd3\",\r\n        \"displayName\": \"bd3\",\r\n        \"subnets\": [],\r\n        \"vrfRef\": {\r\n            \"schemaId\": \"609f10db3800005062fa80e2\",\r\n            \"templateName\": \"Stretched\",\r\n            \"vrfName\": \"VRF1\"\r\n        }\r\n    },\r\n  \"_updateVersion\": 0\r\n}]",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "https://10.122.169.17/mso/api/v1/schemas/609f10db3800005062fa80e2",
+					"protocol": "https",
+					"host": [
+						"10",
+						"122",
+						"169",
+						"17"
+					],
+					"path": [
+						"mso",
+						"api",
+						"v1",
+						"schemas",
+						"609f10db3800005062fa80e2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Bridge Domain",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer ",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\r\n  \"op\": \"replace\",\r\n  \"path\": \"/templates/Stretched/bds/bd3\",\r\n  \"value\": {\r\n        \"name\": \"bd3\",\r\n        \"displayName\": \"bd3\",\r\n        \"l2UnknownUnicast\": \"flood\",\r\n        \"subnets\": [],\r\n        \"vrfRef\": {\r\n            \"schemaId\": \"609f10db3800005062fa80e2\",\r\n            \"templateName\": \"Stretched\",\r\n            \"vrfName\": \"VRF1\"\r\n        }\r\n    },\r\n  \"_updateVersion\": 0\r\n}]",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "https://10.122.169.17/mso/api/v1/schemas/609f10db3800005062fa80e2",
+					"protocol": "https",
+					"host": [
+						"10",
+						"122",
+						"169",
+						"17"
+					],
+					"path": [
+						"mso",
+						"api",
+						"v1",
+						"schemas",
+						"609f10db3800005062fa80e2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add static port to EPG",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer ",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\r\n  \"op\": \"add\",\r\n  \"path\": \"/sites/5c00b62b0e000063000b9dd7-Stretched/anps/AP1/epgs/EPG1/staticPorts/-\",\r\n  \"value\": {\r\n                           \"type\":\"port\",\r\n                           \"deploymentImmediacy\":\"lazy\",\r\n                           \"mode\":\"regular\",\r\n                           \"path\":\"topology/pod-1/paths-101/pathep-[eth1/20]\",\r\n                           \"pod\":\"topology/pod-1\",\r\n                           \"leaf\":\"topology/pod-1/node-101\",\r\n                           \"portEncapVlan\":10\r\n                        },\r\n  \"_updateVersion\": 0\r\n}]",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "https://10.122.169.17/mso/api/v1/schemas/609f10db3800005062fa80e2",
+					"protocol": "https",
+					"host": [
+						"10",
+						"122",
+						"169",
+						"17"
+					],
+					"path": [
+						"mso",
+						"api",
+						"v1",
+						"schemas",
+						"609f10db3800005062fa80e2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update spine infra config",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer ",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\r\n  \"op\": \"replace\",\r\n  \"path\": \"/sites/5c00b62b0e000063000b9dd7/pods/pod-2/spines/a-spine3\",\r\n  \"value\":                         {\r\n                            \"nodeId\": 2001,\r\n                            \"name\": \"a-spine3\",\r\n                            \"ports\": [\r\n                                {\r\n                                    \"portId\": \"1/29\",\r\n                                    \"ipAddress\": \"192.168.2.0/31\",\r\n                                    \"mtu\": \"inherit\",\r\n                                    \"routingPolicy\": \"P2P\",\r\n                                    \"ospfAuthType\": \"none\",\r\n                                    \"ospfAuthKeyId\": 1\r\n                                }\r\n                            ],\r\n                            \"bgpPeeringEnabled\": true,\r\n                            \"msiteControlPlaneTep\": \"192.168.2.101\",\r\n                            \"routeReflectorEnabled\": false,\r\n                            \"faults\": []\r\n                        },\r\n  \"_updateVersion\": 0\r\n}]",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "https://10.122.169.17/api/v1/sites/fabric-connectivity",
+					"protocol": "https",
+					"host": [
+						"10",
+						"122",
+						"169",
+						"17"
+					],
+					"path": [
+						"api",
+						"v1",
+						"sites",
+						"fabric-connectivity"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

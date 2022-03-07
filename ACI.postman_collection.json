@@ -1,0 +1,837 @@
+{
+	"info": {
+		"_postman_id": "8ebbfc7b-bdd2-4aa1-82d9-0c6d8864bded",
+		"name": "ACI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Authenticate",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "7a50b33e-05a5-46b6-84aa-b9de35e6ad76",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "91441d56-3abd-4719-814e-e5efe09140fa",
+								"exec": [
+									"pm.environment.get(\"token\", \"token\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "Body:\r\n{\r\n    \"aaaUser\": {\r\n        \"attributes\": {\r\n            \"name\": \"{{ldap}}\",\r\n            \"pwd\": \"{{pass}}\"\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "https://{{apic1}}/api/aaaLogin.json",
+							"protocol": "https",
+							"host": [
+								"{{apic1}}"
+							],
+							"path": [
+								"api",
+								"aaaLogin.json"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Access Policies",
+			"item": [
+				{
+					"name": "Create VLAN Pool",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"fvnsVlanInstP\": {\r\n    \"attributes\": {\r\n      \"dn\": \"uni/infra/vlanns-[POOL1]-static\",\r\n      \"name\": \"POOL1\",\r\n      \"rn\": \"vlanns-[POOL1]-static\",\r\n      \"status\": \"created,modified\"\r\n    },\r\n    \"children\": [\r\n      {\r\n        \"fvnsEncapBlk\": {\r\n          \"attributes\": {\r\n            \"dn\": \"uni/infra/vlanns-[POOL1]-static/from-[vlan-10]-to-[vlan-100]\",\r\n            \"from\": \"vlan-10\",\r\n            \"to\": \"vlan-100\",\r\n            \"rn\": \"from-[vlan-10]-to-[vlan-100]\",\r\n            \"status\": \"created,modified\"\r\n          },\r\n          \"children\": []\r\n        }\r\n      }\r\n    ]\r\n  }\r\n}",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "https://{{apic1}}/api/node/mo/uni/infra/vlanns-[POOL1]-static.json",
+							"protocol": "https",
+							"host": [
+								"{{apic1}}"
+							],
+							"path": [
+								"api",
+								"node",
+								"mo",
+								"uni",
+								"infra",
+								"vlanns-[POOL1]-static.json"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create AAEP",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "aut",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"infraInfra\": {\r\n    \"attributes\": {\r\n      \"dn\": \"uni/infra\",\r\n      \"status\": \"modified\"\r\n    },\r\n    \"children\": [\r\n      {\r\n        \"infraAttEntityP\": {\r\n          \"attributes\": {\r\n            \"name\": \"AAEP1\",\r\n            \"status\": \"created\"\r\n          },\r\n          \"children\": []\r\n        }\r\n      },\r\n      {\r\n        \"infraFuncP\": {\r\n          \"attributes\": {\r\n            \"dn\": \"uni/infra/funcprof\",\r\n            \"status\": \"modified\"\r\n          },\r\n          \"children\": []\r\n        }\r\n      }\r\n    ]\r\n  }\r\n}",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "https://{{apic1}}/api/node/mo/uni/infra.json",
+							"protocol": "https",
+							"host": [
+								"{{apic1}}"
+							],
+							"path": [
+								"api",
+								"node",
+								"mo",
+								"uni",
+								"infra.json"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Domain",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"physDomP\": {\r\n    \"attributes\": {\r\n      \"dn\": \"uni/phys-domain1\",\r\n      \"name\": \"domain1\",\r\n      \"rn\": \"phys-domain1\",\r\n      \"status\": \"created\"\r\n    },\r\n    \"children\": [\r\n      {\r\n        \"infraRsVlanNs\": {\r\n          \"attributes\": {\r\n            \"tDn\": \"uni/infra/vlanns-[POOL1]-static\",\r\n            \"status\": \"created\"\r\n          },\r\n          \"children\": []\r\n        }\r\n      }\r\n    ]\r\n  }\r\n}",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "https://{{apic1}}/api/node/mo/uni/phys-domain1.json",
+							"protocol": "https",
+							"host": [
+								"{{apic1}}"
+							],
+							"path": [
+								"api",
+								"node",
+								"mo",
+								"uni",
+								"phys-domain1.json"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Port Policy",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"infraAccPortGrp\": {\r\n    \"attributes\": {\r\n      \"name\": \"port-policy\",\r\n      \"status\": \"created\"\r\n    },\r\n    \"children\": [\r\n      {\r\n        \"infraRsLldpIfPol\": {\r\n          \"attributes\": {\r\n            \"tnLldpIfPolName\": \"default\",\r\n            \"status\": \"created,modified\"\r\n          },\r\n          \"children\": []\r\n        }\r\n      },\r\n      {\r\n        \"infraRsAttEntP\": {\r\n          \"attributes\": {\r\n            \"tDn\": \"uni/infra/AAEP1\",\r\n            \"status\": \"created,modified\"\r\n          },\r\n          \"children\": []\r\n        }\r\n      }\r\n    ]\r\n  }\r\n}",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "https://{{apic1}}/api/node/mo/uni/infra/funcprof/accportgrp-port-policy.json",
+							"protocol": "https",
+							"host": [
+								"{{apic1}}"
+							],
+							"path": [
+								"api",
+								"node",
+								"mo",
+								"uni",
+								"infra",
+								"funcprof",
+								"accportgrp-port-policy.json"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Interface profile",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"infraAccPortP\": {\r\n    \"attributes\": {\r\n      \"name\": \"101\",\r\n      \"status\": \"created,modified\"\r\n    },\r\n    \"children\": [\r\n      {\r\n        \"infraHPortS\": {\r\n          \"attributes\": {\r\n            \"name\": \"eth1-1\",\r\n            \"rn\": \"hports-eth1-1-typ-range\",\r\n            \"status\": \"created,modified\"\r\n          },\r\n          \"children\": [\r\n            {\r\n              \"infraPortBlk\": {\r\n                \"attributes\": {\r\n                  \"name\": \"block2\",\r\n                  \"status\": \"created,modified\"\r\n                },\r\n                \"children\": []\r\n              }\r\n            },\r\n            {\r\n              \"infraRsAccBaseGrp\": {\r\n                \"attributes\": {\r\n                  \"tDn\": \"uni/infra/funcprof/accportgrp-port-policy\",\r\n                  \"status\": \"created,modified\"\r\n                },\r\n                \"children\": []\r\n              }\r\n            }\r\n          ]\r\n        }\r\n      }\r\n    ]\r\n  }\r\n}",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "https://{{apic1}}/api/node/mo/uni/infra/accportprof-101.json",
+							"protocol": "https",
+							"host": [
+								"{{apic1}}"
+							],
+							"path": [
+								"api",
+								"node",
+								"mo",
+								"uni",
+								"infra",
+								"accportprof-101.json"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Leaf Profile",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"infraNodeP\": {\r\n    \"attributes\": {\r\n      \"name\": \"101\",\r\n      \"status\": \"created,modified\"\r\n    },\r\n    \"children\": [\r\n      {\r\n        \"infraLeafS\": {\r\n          \"attributes\": {\r\n            \"type\": \"range\",\r\n            \"name\": \"101\",\r\n            \"status\": \"created\"\r\n          },\r\n          \"children\": [\r\n            {\r\n              \"infraNodeBlk\": {\r\n                \"attributes\": {\r\n                  \"from_\": \"101\",\r\n                  \"to_\": \"101\",\r\n                  \"name\": \"101\",\r\n                  \"status\": \"created\"\r\n                },\r\n                \"children\": []\r\n              }\r\n            }\r\n          ]\r\n        }\r\n      },\r\n      {\r\n        \"infraRsAccPortP\": {\r\n          \"attributes\": {\r\n            \"tDn\": \"uni/infra/accportprof-101\",\r\n            \"status\": \"created,modified\"\r\n          },\r\n          \"children\": []\r\n        }\r\n      }\r\n    ]\r\n  }\r\n}",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "https://{{apic1}}/api/node/mo/uni/infra/nprof-101.json",
+							"protocol": "https",
+							"host": [
+								"{{apic1}}"
+							],
+							"path": [
+								"api",
+								"node",
+								"mo",
+								"uni",
+								"infra",
+								"nprof-101.json"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Tenant",
+			"item": [
+				{
+					"name": "Create Tenant",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fvTenant\":{\r\n        \"attributes\":{\r\n            \"name\":\"Tenant1\",\r\n            \"nameAlias\":\"\",\r\n            \"descr\":\"\",\r\n            \"status\":\"created\"\r\n        },\r\n        \"children\":[]\r\n    }\r\n}",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "https://{{apic1}}/api/node/mo/uni/tn-Tenant1.json",
+							"protocol": "https",
+							"host": [
+								"{{apic1}}"
+							],
+							"path": [
+								"api",
+								"node",
+								"mo",
+								"uni",
+								"tn-Tenant1.json"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Application Profile",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"fvAp\": {\r\n    \"attributes\": {\r\n      \"dn\": \"uni/tn-Tenant1/ap-AP1\",\r\n      \"name\": \"AP1\",\r\n      \"rn\": \"ap-AP1\",\r\n      \"status\": \"created\"\r\n    },\r\n    \"children\": []\r\n  }\r\n}",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "https://{{apic1}}/api/node/mo/uni/tn-Tenant1/ap-AP1.json",
+							"protocol": "https",
+							"host": [
+								"{{apic1}}"
+							],
+							"path": [
+								"api",
+								"node",
+								"mo",
+								"uni",
+								"tn-Tenant1",
+								"ap-AP1.json"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create VRF",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"fvTenant\": {\r\n    \"attributes\": {\r\n      \"dn\": \"uni/tn-Tenant1\",\r\n      \"status\": \"modified\"\r\n    },\r\n    \"children\": [\r\n      {\r\n        \"fvCtx\": {\r\n          \"attributes\": {\r\n            \"name\": \"VRF1\",\r\n            \"status\": \"created\"\r\n          },\r\n          \"children\": []\r\n        }\r\n      }\r\n    ]\r\n  }\r\n}",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "https://{{apic1}}//api/mo/uni/tn-Tenant1.json",
+							"protocol": "https",
+							"host": [
+								"{{apic1}}"
+							],
+							"path": [
+								"",
+								"api",
+								"mo",
+								"uni",
+								"tn-Tenant1.json"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create BD and subnet",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"fvTenant\": {\r\n    \"attributes\": {\r\n      \"dn\": \"uni/tn-Tenant1\",\r\n      \"status\": \"modified\"\r\n    },\r\n    \"children\": [\r\n      {\r\n        \"fvBD\": {\r\n          \"attributes\": {\r\n            \"arpFlood\": \"true\",\r\n            \"name\": \"BD1\",\r\n            \"status\": \"created\"\r\n          },\r\n          \"children\": [\r\n            {\r\n              \"fvRsCtx\": {\r\n                \"attributes\": {\r\n                  \"tnFvCtxName\": \"VRF1\",\r\n                  \"status\": \"created,modified\"\r\n                },\r\n                \"children\": []\r\n              }\r\n            }\r\n          ]\r\n          \"children\": [\r\n            {\r\n              \"fvSubnet\": {\r\n                \"attributes\": {\r\n                  \"ctrl\": \"\",\r\n                  \"ip\": \"192.168.0.1/24\",\r\n                  \"scope\": \"public\",\r\n                  \"status\": \"created\"\r\n                },\r\n                \"children\": []\r\n              }\r\n            }\r\n          ]\r\n        }\r\n      }\r\n    ]\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{apic1}}//api/mo/uni/tn-Tenant1.json",
+							"protocol": "https",
+							"host": [
+								"{{apic1}}"
+							],
+							"path": [
+								"",
+								"api",
+								"mo",
+								"uni",
+								"tn-Tenant1.json"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create EPG w/ Domain and static ports",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"fvAEPg\": {\r\n    \"attributes\": {\r\n      \"prio\": \"level3\",\r\n      \"name\": \"EPG1\",\r\n      \"status\": \"created\"\r\n    },\r\n    \"children\": [\r\n      {\r\n        \"fvRsPathAtt\": {\r\n          \"attributes\": {\r\n            \"encap\": \"vlan-10\",\r\n            \"tDn\": \"topology/pod-1/paths-101/pathep-[eth1/1]\",\r\n            \"status\": \"created\"\r\n          },\r\n          \"children\": []\r\n        }\r\n      },\r\n      {\r\n        \"fvRsBd\": {\r\n          \"attributes\": {\r\n            \"tnFvBDName\": \"BD1\",\r\n            \"status\": \"created,modified\"\r\n          },\r\n          \"children\": []\r\n        }\r\n      },\r\n      {\r\n        \"fvRsDomAtt\": {\r\n          \"attributes\": {\r\n            \"tDn\": \"uni/vmmp-VMware/dom-shared-DVS\",\r\n            \"resImedcy\": \"pre-provision\",\r\n            \"status\": \"created\"\r\n          },\r\n          \"children\": []\r\n        }\r\n      }\r\n    ]\r\n  }\r\n}",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "https://{{apic1}}/api/node/mo/uni/tn-Tenant1/ap-AP1/epg-EPG1.json",
+							"protocol": "https",
+							"host": [
+								"{{apic1}}"
+							],
+							"path": [
+								"api",
+								"node",
+								"mo",
+								"uni",
+								"tn-Tenant1",
+								"ap-AP1",
+								"epg-EPG1.json"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create VRF, BD and subnet",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"fvTenant\": {\r\n    \"attributes\": {\r\n      \"dn\": \"uni/tn-Tenant1\",\r\n      \"status\": \"modified\"\r\n    },\r\n    \"children\": [\r\n      {\r\n        \"fvBD\": {\r\n          \"attributes\": {\r\n            \"arpFlood\": \"true\",\r\n            \"name\": \"BD1\",\r\n            \"status\": \"created\"\r\n          },\r\n          \"children\": [\r\n            {\r\n              \"fvRsCtx\": {\r\n                \"attributes\": {\r\n                  \"tnFvCtxName\": \"VRF1\",\r\n                  \"status\": \"created,modified\"\r\n                },\r\n                \"children\": []\r\n              }\r\n            }\r\n          ]\r\n          \"children\": [\r\n            {\r\n              \"fvSubnet\": {\r\n                \"attributes\": {\r\n                  \"ctrl\": \"\",\r\n                  \"ip\": \"192.168.0.1/24\",\r\n                  \"scope\": \"public\",\r\n                  \"status\": \"created\"\r\n                },\r\n                \"children\": []\r\n              }\r\n            }\r\n          ]\r\n        }\r\n      },\r\n      {\r\n        \"fvCtx\": {\r\n          \"attributes\": {\r\n            \"name\": \"VRF1\",\r\n            \"status\": \"created\"\r\n          },\r\n          \"children\": []\r\n        }\r\n      }\r\n    ]\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{apic1}}//api/mo/uni/tn-Tenant1.json",
+							"protocol": "https",
+							"host": [
+								"{{apic1}}"
+							],
+							"path": [
+								"",
+								"api",
+								"mo",
+								"uni",
+								"tn-Tenant1.json"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All Tenants",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{apic1}}/api/node/class/fvTenant.json",
+							"protocol": "https",
+							"host": [
+								"{{apic1}}"
+							],
+							"path": [
+								"api",
+								"node",
+								"class",
+								"fvTenant.json"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All child object of a Tenant",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{apic1}}/api/node/mo/uni/tn-NickA.json?query-target=children",
+							"protocol": "https",
+							"host": [
+								"{{apic1}}"
+							],
+							"path": [
+								"api",
+								"node",
+								"mo",
+								"uni",
+								"tn-NickA.json"
+							],
+							"query": [
+								{
+									"key": "query-target",
+									"value": "children"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All Faults for a Tenant",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "https://{{apic1}}/api/node/mo/uni/tn-NickA.json?rsp-subtree-include=faults,no-scoped,subtree&order-by=faultInfo.severity",
+							"protocol": "https",
+							"host": [
+								"{{apic1}}"
+							],
+							"path": [
+								"api",
+								"node",
+								"mo",
+								"uni",
+								"tn-NickA.json"
+							],
+							"query": [
+								{
+									"key": "rsp-subtree-include",
+									"value": "faults,no-scoped,subtree"
+								},
+								{
+									"key": "order-by",
+									"value": "faultInfo.severity"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All static ports for EPG",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{apic1}}/api/node/mo/uni/tn-Nick1/ap-AP1/epg-E1.json?query-target=children&target-subtree-class=fvRsPathAtt",
+							"protocol": "https",
+							"host": [
+								"{{apic1}}"
+							],
+							"path": [
+								"api",
+								"node",
+								"mo",
+								"uni",
+								"tn-Nick1",
+								"ap-AP1",
+								"epg-E1.json"
+							],
+							"query": [
+								{
+									"key": "query-target",
+									"value": "children"
+								},
+								{
+									"key": "target-subtree-class",
+									"value": "fvRsPathAtt"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Monitoring",
+			"item": [
+				{
+					"name": "APIC CPU & Memory",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{apic1}}/api/node/class/procEntity.json?",
+							"protocol": "https",
+							"host": [
+								"{{apic1}}"
+							],
+							"path": [
+								"api",
+								"node",
+								"class",
+								"procEntity.json"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "APIC Storage",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{apic1}}/api/node/class/eqptStorage.json?",
+							"protocol": "https",
+							"host": [
+								"{{apic1}}"
+							],
+							"path": [
+								"api",
+								"node",
+								"class",
+								"eqptStorage.json"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Node Interface",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{apic1}}/api/node/mo/topology/pod-1/node-101/sys/phys-[eth1/1].json",
+							"protocol": "https",
+							"host": [
+								"{{apic1}}"
+							],
+							"path": [
+								"api",
+								"node",
+								"mo",
+								"topology",
+								"pod-1",
+								"node-101",
+								"sys",
+								"phys-[eth1",
+								"1].json"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Node Interface Ingress Egress stats",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{apic1}}/api/node/mo/topology/pod-1/node-101/sys/phys-[eth1/1]/dbgEtherStats.json",
+							"protocol": "https",
+							"host": [
+								"{{apic1}}"
+							],
+							"path": [
+								"api",
+								"node",
+								"mo",
+								"topology",
+								"pod-1",
+								"node-101",
+								"sys",
+								"phys-[eth1",
+								"1]",
+								"dbgEtherStats.json"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get specific fault",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{apic1}}/api/node/class/faultInst.json?query-target-filter=and(and(eq(faultInfo.code,\"F0532\")),lt(faultInfo.lastTransition, \"2022-01-08\"))",
+							"protocol": "https",
+							"host": [
+								"{{apic1}}"
+							],
+							"path": [
+								"api",
+								"node",
+								"class",
+								"faultInst.json"
+							],
+							"query": [
+								{
+									"key": "query-target-filter",
+									"value": "and(and(eq(faultInfo.code,\"F0532\")),lt(faultInfo.lastTransition, \"2022-01-08\"))"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
