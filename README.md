@@ -2,6 +2,6 @@
 
 This Repository holds the configuration files for ACI postman requests. Follow postmans official import documentation to import this file into postman.
 
-This conifguration file uses the following environment variables you will need to define
+This configuration file uses the following environment variables you will need to define
 
 {{apic1}} {{ldap}} {{pass}} {{token}}
